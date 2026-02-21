@@ -12,12 +12,12 @@ final class RoomScannerViewModel: ObservableObject {
     @Published var scanState: ScanState = .ready
     @Published var exportURL: URL?
     @Published var showShareSheet = false
-    @Published var statusText = "Scan in progress. Use RoomPlan's Done button when finished."
     @Published var errorText: String?
     @Published var wallCount = 0
     @Published var furnitureCount = 0
 
     let isSupported = RoomCaptureSession.isSupported
+    let captureManager = RoomCaptureManager()
 
     func startScan() {
         scanState = .scanning
@@ -26,7 +26,10 @@ final class RoomScannerViewModel: ObservableObject {
         errorText = nil
         wallCount = 0
         furnitureCount = 0
-        statusText = "Scan in progress. Use RoomPlan's Done button when finished."
+    }
+
+    func stopScan() {
+        captureManager.stopSession()
     }
 
     func handleScanComplete(_ room: CapturedRoom) {
@@ -62,27 +65,36 @@ struct ContentView: View {
             } else {
                 switch viewModel.scanState {
                 case .ready:
-                    VStack {
+                    VStack(spacing: 16) {
+                        Text("RoomWise Scanner")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Text("Scan your room with LiDAR")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                         Button("Start Scan") {
                             viewModel.startScan()
                         }
                         .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 case .scanning:
-                    ZStack(alignment: .top) {
-                        RoomCaptureContainerView { capturedRoom in
+                    ZStack(alignment: .bottom) {
+                        RoomCaptureContainerView(
+                            manager: viewModel.captureManager
+                        ) { capturedRoom in
                             viewModel.handleScanComplete(capturedRoom)
                         }
                         .ignoresSafeArea()
 
-                        Text(viewModel.statusText)
-                            .font(.footnote)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(.thinMaterial, in: Capsule())
-                            .padding(.top, 12)
+                        Button("Done") {
+                            viewModel.stopScan()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .padding(.bottom, 40)
                     }
 
                 case .complete:
@@ -92,14 +104,16 @@ struct ContentView: View {
                             .fontWeight(.semibold)
 
                         VStack(spacing: 8) {
-                            Text("Walls detected: \(viewModel.wallCount)")
-                            Text("Furniture detected: \(viewModel.furnitureCount)")
+                            Text("Walls: \(viewModel.wallCount)")
+                            Text("Furniture: \(viewModel.furnitureCount)")
                         }
+                        .font(.body)
 
                         Button("Export JSON") {
                             viewModel.exportJSON()
                         }
                         .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
                         .disabled(viewModel.exportURL == nil)
 
                         if let errorText = viewModel.errorText {

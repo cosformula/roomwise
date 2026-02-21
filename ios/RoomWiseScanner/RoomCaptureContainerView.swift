@@ -2,7 +2,20 @@ import RoomPlan
 import SwiftUI
 import UIKit
 
+final class RoomCaptureManager: ObservableObject {
+    private(set) var captureView: RoomCaptureView?
+
+    func setCaptureView(_ view: RoomCaptureView) {
+        captureView = view
+    }
+
+    func stopSession() {
+        captureView?.captureSession.stop()
+    }
+}
+
 struct RoomCaptureContainerView: UIViewRepresentable {
+    let manager: RoomCaptureManager
     let onCaptureComplete: (CapturedRoom) -> Void
 
     func makeUIView(context: Context) -> RoomCaptureView {
@@ -10,6 +23,9 @@ struct RoomCaptureContainerView: UIViewRepresentable {
         captureView.captureSession.delegate = context.coordinator
         captureView.delegate = context.coordinator
         captureView.captureSession.run(configuration: RoomCaptureSession.Configuration())
+        DispatchQueue.main.async {
+            manager.setCaptureView(captureView)
+        }
         return captureView
     }
 
