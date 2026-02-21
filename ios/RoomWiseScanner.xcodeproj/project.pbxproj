@@ -12,6 +12,7 @@
 		A1B2C3D4E5F60718293A0013 /* RoomCaptureContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A0003 /* RoomCaptureContainerView.swift */; };
 		A1B2C3D4E5F60718293A0014 /* RoomJSONExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A0004 /* RoomJSONExporter.swift */; };
 		A1B2C3D4E5F60718293A0015 /* RoomPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A0007 /* RoomPlan.framework */; };
+		A1B2C3D4E5F60718293A0016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A0009 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		A1B2C3D4E5F60718293A0006 /* RoomWiseScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RoomWiseScanner.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A0007 /* RoomPlan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RoomPlan.framework; path = System/Library/Frameworks/RoomPlan.framework; sourceTree = SDKROOT; };
 		A1B2C3D4E5F60718293A0008 /* RoomWiseScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomWiseScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60718293A0009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 				A1B2C3D4E5F60718293A0002 /* ContentView.swift */,
 				A1B2C3D4E5F60718293A0003 /* RoomCaptureContainerView.swift */,
 				A1B2C3D4E5F60718293A0004 /* RoomJSONExporter.swift */,
+				A1B2C3D4E5F60718293A0009 /* Assets.xcassets */,
 				A1B2C3D4E5F60718293A0005 /* Info.plist */,
 				A1B2C3D4E5F60718293A0006 /* RoomWiseScanner.entitlements */,
 			);
@@ -133,6 +136,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F60718293A0016 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +180,7 @@
 		A1B2C3D4E5F60718293A0601 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RoomWiseScanner/RoomWiseScanner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -187,7 +192,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.roomwise.scanner;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cosformula.roomwise;
+				DEVELOPMENT_TEAM = YZD945Y6PX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -199,6 +205,7 @@
 		A1B2C3D4E5F60718293A0602 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RoomWiseScanner/RoomWiseScanner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -210,7 +217,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.roomwise.scanner;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cosformula.roomwise;
+				DEVELOPMENT_TEAM = YZD945Y6PX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
