@@ -5,6 +5,7 @@ const CONFIG = {
   walkwayWidth: 0.8,
   walkwayGridStep: 0.2,
   minWalkwayCoverage: 0.2,
+  roomOriginPadding: 0.28,
   doorClearanceDepth: 0.95,
   windowClearanceDepth: 0.4,
   openingPadding: 0.06,
@@ -223,11 +224,14 @@ async function loadSampleRoomJson() {
 function normalizeDataset(raw) {
   const roomInput = raw.room || raw;
   const furnitureInput = Array.isArray(raw.furniture) ? raw.furniture : [];
+  const room = normalizeRoom(roomInput);
+  const furniture = furnitureInput.map((item, index) => normalizeFurniture(item, index));
+  const aligned = alignDatasetToRoomAxis(room, furniture);
 
   return {
     meta: raw.meta || {},
-    room: normalizeRoom(roomInput),
-    furniture: furnitureInput.map((item, index) => normalizeFurniture(item, index))
+    room: aligned.room,
+    furniture: aligned.furniture
   };
 }
 
@@ -283,9 +287,44 @@ function normalizeFurniture(item, index) {
     height: Math.max(0.1, toNumber(item.height, 0.7)),
     x: toNumber(item.x, 0),
     y: toNumber(item.y, 0),
-    rotation: normalizeRotation(toNumber(item.rotation, 0)),
+    rotation: toNumber(item.rotation, 0),
     existing: item.existing !== false,
     movable: item.movable !== false
+  };
+}
+
+function alignDatasetToRoomAxis(room, furniture) {
+  const principal = getPrincipalRoomAxis(room.polygon);
+  const roomRotationDegrees = (principal.angleRadians * 180) / Math.PI;
+  const derotationRadians = -principal.angleRadians;
+
+  const rotatedPolygon = room.polygon.map((point) => rotatePoint(point, derotationRadians));
+  const rotatedBounds = getPolygonBounds(rotatedPolygon);
+  const translateX = CONFIG.roomOriginPadding - rotatedBounds.minX;
+  const translateY = CONFIG.roomOriginPadding - rotatedBounds.minY;
+
+  const alignedRoom = {
+    ...room,
+    polygon: rotatedPolygon.map((point) => ({
+      x: point.x + translateX,
+      y: point.y + translateY
+    }))
+  };
+
+  const alignedFurniture = furniture.map((item) => {
+    const rotatedPosition = rotatePoint({ x: item.x, y: item.y }, derotationRadians);
+
+    return {
+      ...item,
+      x: rotatedPosition.x + translateX,
+      y: rotatedPosition.y + translateY,
+      rotation: normalizeRotation(toNumber(item.rotation, 0) - roomRotationDegrees)
+    };
+  });
+
+  return {
+    room: alignedRoom,
+    furniture: alignedFurniture
   };
 }
 
@@ -1158,6 +1197,36 @@ function getWalls(polygon) {
   return walls;
 }
 
+function getPrincipalRoomAxis(polygon) {
+  let longestLength = -Infinity;
+  let angleRadians = 0;
+
+  for (let i = 0; i < polygon.length; i += 1) {
+    const p1 = polygon[i];
+    const p2 = polygon[(i + 1) % polygon.length];
+
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const length = Math.hypot(dx, dy);
+
+    if (length > longestLength) {
+      longestLength = length;
+      angleRadians = Math.atan2(dy, dx);
+    }
+  }
+
+  if (angleRadians > Math.PI / 2) {
+    angleRadians -= Math.PI;
+  } else if (angleRadians <= -Math.PI / 2) {
+    angleRadians += Math.PI;
+  }
+
+  return {
+    angleRadians,
+    length: longestLength
+  };
+}
+
 function getFootprint(item) {
   const rotation = normalizeRotation(item.rotation);
   if (rotation === 90 || rotation === 270) {
@@ -1393,6 +1462,15 @@ function distancePointSegment(point, a, b) {
   const cx = a.x + abx * t;
   const cy = a.y + aby * t;
   return Math.hypot(point.x - cx, point.y - cy);
+}
+
+function rotatePoint(point, radians) {
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+  return {
+    x: point.x * cos - point.y * sin,
+    y: point.x * sin + point.y * cos
+  };
 }
 
 function getPolygonBounds(polygon) {
