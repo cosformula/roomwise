@@ -1,120 +1,104 @@
 {
-  "meta": {
-    "source": "simulated-roomplan",
-    "version": "0.1",
-    "createdAt": "2026-02-21",
-    "roomName": "Living Room"
+  "furniture" : [
+    {
+      "category" : "table",
+      "depth" : 0.817,
+      "existing" : true,
+      "height" : 0.757,
+      "id" : "object-1",
+      "movable" : true,
+      "name" : "Table",
+      "rotation" : 318,
+      "type" : "table",
+      "width" : 1.355,
+      "x" : 2.026,
+      "y" : 0.756
+    },
+    {
+      "category" : "storage",
+      "depth" : 0.932,
+      "existing" : true,
+      "height" : 1.007,
+      "id" : "object-2",
+      "movable" : true,
+      "name" : "Storage",
+      "rotation" : 318,
+      "type" : "storage",
+      "width" : 2.782,
+      "x" : 1.457,
+      "y" : 1.345
+    },
+    {
+      "category" : "chair",
+      "depth" : 0.673,
+      "existing" : true,
+      "height" : 1.026,
+      "id" : "object-3",
+      "movable" : true,
+      "name" : "Chair",
+      "rotation" : 210,
+      "type" : "chair",
+      "width" : 0.594,
+      "x" : 2.291,
+      "y" : 1.323
+    },
+    {
+      "category" : "storage",
+      "depth" : 0.635,
+      "existing" : true,
+      "height" : 2.411,
+      "id" : "object-4",
+      "movable" : true,
+      "name" : "Storage",
+      "rotation" : 138,
+      "type" : "storage",
+      "width" : 1.931,
+      "x" : 2.533,
+      "y" : 3.402
+    }
+  ],
+  "meta" : {
+    "createdAt" : "2026-02-21",
+    "roomName" : "Scanned Room",
+    "source" : "roomplan-ios",
+    "version" : "0.1"
   },
-  "room": {
-    "unit": "m",
-    "polygon": [
-      { "x": 0.0, "y": 0.0 },
-      { "x": 5.0, "y": 0.0 },
-      { "x": 5.0, "y": 4.0 },
-      { "x": 0.0, "y": 4.0 }
-    ],
-    "doors": [
+  "room" : {
+    "doors" : [
       {
-        "id": "door-main",
-        "wallIndex": 0,
-        "offset": 0.35,
-        "width": 0.9,
-        "swing": "inward-left"
+        "id" : "door-1",
+        "offset" : 0.12,
+        "swing" : "inward-left",
+        "wallIndex" : 1,
+        "width" : 0.788
       }
     ],
-    "windows": [
+    "polygon" : [
       {
-        "id": "window-north",
-        "wallIndex": 2,
-        "offset": 0.8,
-        "width": 1.8
+        "x" : 2.257,
+        "y" : 0
       },
       {
-        "id": "window-east",
-        "wallIndex": 1,
-        "offset": 1.2,
-        "width": 1.4
+        "x" : 4.284,
+        "y" : 2.256
+      },
+      {
+        "x" : 2.027,
+        "y" : 4.284
+      },
+      {
+        "x" : 0,
+        "y" : 2.027
+      }
+    ],
+    "unit" : "m",
+    "windows" : [
+      {
+        "id" : "window-1",
+        "offset" : 1.381,
+        "wallIndex" : 3,
+        "width" : 1.117
       }
     ]
-  },
-  "furniture": [
-    {
-      "id": "sofa-1",
-      "name": "3-seat Sofa",
-      "type": "sofa",
-      "width": 2.1,
-      "depth": 0.95,
-      "height": 0.85,
-      "x": 2.75,
-      "y": 2.95,
-      "rotation": 180,
-      "existing": true,
-      "movable": true
-    },
-    {
-      "id": "tv-1",
-      "name": "TV Console",
-      "type": "tv",
-      "width": 1.8,
-      "depth": 0.45,
-      "height": 0.52,
-      "x": 2.65,
-      "y": 0.72,
-      "rotation": 0,
-      "existing": true,
-      "movable": true
-    },
-    {
-      "id": "coffee-1",
-      "name": "Coffee Table",
-      "type": "table",
-      "width": 1.2,
-      "depth": 0.6,
-      "height": 0.42,
-      "x": 2.7,
-      "y": 2.15,
-      "rotation": 0,
-      "existing": true,
-      "movable": true
-    },
-    {
-      "id": "desk-1",
-      "name": "Work Desk",
-      "type": "desk",
-      "width": 1.2,
-      "depth": 0.6,
-      "height": 0.75,
-      "x": 4.15,
-      "y": 2.8,
-      "rotation": 270,
-      "existing": true,
-      "movable": true
-    },
-    {
-      "id": "bookshelf-1",
-      "name": "Bookshelf",
-      "type": "storage",
-      "width": 0.9,
-      "depth": 0.35,
-      "height": 1.9,
-      "x": 0.6,
-      "y": 2.65,
-      "rotation": 90,
-      "existing": true,
-      "movable": true
-    },
-    {
-      "id": "armchair-1",
-      "name": "Armchair",
-      "type": "chair",
-      "width": 0.9,
-      "depth": 0.85,
-      "height": 0.95,
-      "x": 1.15,
-      "y": 1.45,
-      "rotation": 90,
-      "existing": true,
-      "movable": true
-    }
-  ]
+  }
 }
