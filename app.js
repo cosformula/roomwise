@@ -1609,3 +1609,21 @@ function parseHex(hex) {
     b: parseInt(normalized.slice(4, 6), 16)
   };
 }
+
+// Show JSON button
+document.getElementById("showJsonBtn").addEventListener("click", () => {
+  const pre = document.getElementById("jsonPreview");
+  if (pre.style.display === "none") {
+    const data = {
+      meta: appState.meta || {},
+      room: appState.room,
+      furniture: appState.furniture
+    };
+    pre.textContent = JSON.stringify(data, null, 2);
+    pre.style.display = "block";
+    document.getElementById("showJsonBtn").textContent = "Hide JSON";
+  } else {
+    pre.style.display = "none";
+    document.getElementById("showJsonBtn").textContent = "Show JSON";
+  }
+});
