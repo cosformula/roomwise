@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoomWise Phase 0 Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>RoomWise</h1>
+          <p>Phase 0: 2D auto-layout prototype (vanilla HTML/CSS/JS)</p>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <aside class="sidebar">
+          <section class="panel-card">
+            <h2>Room</h2>
+            <p id="roomMeta">Loading sample room...</p>
+            <button id="reloadSampleBtn" class="ghost-btn" type="button">Reload Sample JSON</button>
+          </section>
+
+          <section class="panel-card">
+            <h2>Add Furniture</h2>
+            <form id="addFurnitureForm" autocomplete="off">
+              <label for="furnitureName">Name</label>
+              <input id="furnitureName" name="name" type="text" placeholder="e.g. Reading Desk" required />
+
+              <label for="furnitureWidth">Width (m)</label>
+              <input
+                id="furnitureWidth"
+                name="width"
+                type="number"
+                min="0.3"
+                max="4"
+                step="0.05"
+                placeholder="1.20"
+                required
+              />
+
+              <label for="furnitureDepth">Depth (m)</label>
+              <input
+                id="furnitureDepth"
+                name="depth"
+                type="number"
+                min="0.3"
+                max="4"
+                step="0.05"
+                placeholder="0.60"
+                required
+              />
+
+              <button id="addFurnitureBtn" type="submit">Add Furniture</button>
+            </form>
+          </section>
+
+          <section class="panel-card">
+            <h2>Auto Layout</h2>
+            <button id="autoLayoutBtn" class="accent-btn" type="button">Auto Layout</button>
+
+            <div class="solution-browser">
+              <button id="prevSolutionBtn" type="button">Prev</button>
+              <span id="solutionInfo">No solutions yet</span>
+              <button id="nextSolutionBtn" type="button">Next</button>
+            </div>
+
+            <p id="statusLine" class="status-line">Ready.</p>
+          </section>
+
+          <section class="panel-card">
+            <h2>Furniture</h2>
+            <ul id="furnitureList" class="furniture-list"></ul>
+          </section>
+        </aside>
+
+        <main class="canvas-stage">
+          <canvas id="roomCanvas" width="1200" height="800"></canvas>
+
+          <div class="legend">
+            <span><i class="dot room"></i>Room</span>
+            <span><i class="dot door"></i>Door</span>
+            <span><i class="dot window"></i>Window</span>
+            <span><i class="dot existing"></i>Existing Furniture</span>
+            <span><i class="dot new"></i>New Furniture</span>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
